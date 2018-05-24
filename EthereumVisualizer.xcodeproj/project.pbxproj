@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B71D8D2FBF3F528897924191 /* Pods_EthereumVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2810326D90EE4A2558FEAA1D /* Pods_EthereumVisualizer.framework */; };
+		F931917720B3E1EF00583A58 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931917620B3E1EF00583A58 /* ApiClient.swift */; };
+		F931917A20B3E22D00583A58 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931917920B3E22D00583A58 /* String.swift */; };
+		F931917C20B3E2A800583A58 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931917B20B3E2A800583A58 /* Transaction.swift */; };
+		F931917E20B3E67F00583A58 /* GeneralHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931917D20B3E67F00583A58 /* GeneralHelper.swift */; };
+		F931918020B3E68600583A58 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931917F20B3E68600583A58 /* UIViewController.swift */; };
+		F931918220B3E7D500583A58 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931918120B3E7D500583A58 /* Constants.swift */; };
+		F931918420B3E82B00583A58 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931918320B3E82B00583A58 /* Token.swift */; };
+		F931918620B3F70D00583A58 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931918520B3F70D00583A58 /* Block.swift */; };
+		F931918820B46FAF00583A58 /* DataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931918720B46FAF00583A58 /* DataViewController.swift */; };
+		F931918B20B4765100583A58 /* TokenTransactionTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F931918A20B4765100583A58 /* TokenTransactionTableCell.swift */; };
+		F9729C4520B49699003ACFB4 /* SetOceanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9729C4420B49699003ACFB4 /* SetOceanView.swift */; };
 		F98231F420B3D09600D6DE72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98231F320B3D09600D6DE72 /* AppDelegate.swift */; };
 		F98231F620B3D09600D6DE72 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = F98231F520B3D09600D6DE72 /* art.scnassets */; };
 		F98231F820B3D09600D6DE72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98231F720B3D09600D6DE72 /* ViewController.swift */; };
@@ -16,6 +28,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2810326D90EE4A2558FEAA1D /* Pods_EthereumVisualizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EthereumVisualizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD7B641E7504D343744AA0B8 /* Pods-EthereumVisualizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EthereumVisualizer.release.xcconfig"; path = "Pods/Target Support Files/Pods-EthereumVisualizer/Pods-EthereumVisualizer.release.xcconfig"; sourceTree = "<group>"; };
+		E28CA0A65E79C04871E31E02 /* Pods-EthereumVisualizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EthereumVisualizer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EthereumVisualizer/Pods-EthereumVisualizer.debug.xcconfig"; sourceTree = "<group>"; };
+		F931917620B3E1EF00583A58 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		F931917920B3E22D00583A58 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		F931917B20B3E2A800583A58 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		F931917D20B3E67F00583A58 /* GeneralHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralHelper.swift; sourceTree = "<group>"; };
+		F931917F20B3E68600583A58 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		F931918120B3E7D500583A58 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F931918320B3E82B00583A58 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		F931918520B3F70D00583A58 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		F931918720B46FAF00583A58 /* DataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewController.swift; sourceTree = "<group>"; };
+		F931918A20B4765100583A58 /* TokenTransactionTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTransactionTableCell.swift; sourceTree = "<group>"; };
+		F9729C4420B49699003ACFB4 /* SetOceanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetOceanView.swift; sourceTree = "<group>"; };
 		F98231F020B3D09600D6DE72 /* EthereumVisualizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EthereumVisualizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98231F320B3D09600D6DE72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98231F520B3D09600D6DE72 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -31,17 +57,98 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71D8D2FBF3F528897924191 /* Pods_EthereumVisualizer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50A62947069413A00BF6F9A2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2810326D90EE4A2558FEAA1D /* Pods_EthereumVisualizer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D5856B8F4A632EA76B412E25 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E28CA0A65E79C04871E31E02 /* Pods-EthereumVisualizer.debug.xcconfig */,
+				AD7B641E7504D343744AA0B8 /* Pods-EthereumVisualizer.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F931917220B3E1CC00583A58 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				F931917620B3E1EF00583A58 /* ApiClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		F931917320B3E1DA00583A58 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F98231F720B3D09600D6DE72 /* ViewController.swift */,
+				F931918720B46FAF00583A58 /* DataViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F931917420B3E1E100583A58 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				F931917D20B3E67F00583A58 /* GeneralHelper.swift */,
+				F931918120B3E7D500583A58 /* Constants.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		F931917520B3E1E600583A58 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F931917B20B3E2A800583A58 /* Transaction.swift */,
+				F931918320B3E82B00583A58 /* Token.swift */,
+				F931918520B3F70D00583A58 /* Block.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F931917820B3E22600583A58 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F931917920B3E22D00583A58 /* String.swift */,
+				F931917F20B3E68600583A58 /* UIViewController.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F931918920B4763100583A58 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F931918A20B4765100583A58 /* TokenTransactionTableCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F9729C4320B49679003ACFB4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F9729C4420B49699003ACFB4 /* SetOceanView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F98231E720B3D09500D6DE72 = {
 			isa = PBXGroup;
 			children = (
 				F98231F220B3D09600D6DE72 /* EthereumVisualizer */,
 				F98231F120B3D09600D6DE72 /* Products */,
+				D5856B8F4A632EA76B412E25 /* Pods */,
+				50A62947069413A00BF6F9A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,9 +163,15 @@
 		F98231F220B3D09600D6DE72 /* EthereumVisualizer */ = {
 			isa = PBXGroup;
 			children = (
+				F9729C4320B49679003ACFB4 /* Views */,
+				F931918920B4763100583A58 /* Cells */,
+				F931917820B3E22600583A58 /* Extensions */,
+				F931917520B3E1E600583A58 /* Models */,
+				F931917420B3E1E100583A58 /* Shared */,
+				F931917320B3E1DA00583A58 /* ViewControllers */,
+				F931917220B3E1CC00583A58 /* Network */,
 				F98231F320B3D09600D6DE72 /* AppDelegate.swift */,
 				F98231F520B3D09600D6DE72 /* art.scnassets */,
-				F98231F720B3D09600D6DE72 /* ViewController.swift */,
 				F98231F920B3D09600D6DE72 /* Main.storyboard */,
 				F98231FC20B3D09600D6DE72 /* Assets.xcassets */,
 				F98231FE20B3D09600D6DE72 /* LaunchScreen.storyboard */,
@@ -74,9 +187,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F982320420B3D09600D6DE72 /* Build configuration list for PBXNativeTarget "EthereumVisualizer" */;
 			buildPhases = (
+				FF210B10BB4206582C141D28 /* [CP] Check Pods Manifest.lock */,
 				F98231EC20B3D09500D6DE72 /* Sources */,
 				F98231ED20B3D09500D6DE72 /* Frameworks */,
 				F98231EE20B3D09500D6DE72 /* Resources */,
+				CE15D76BE3C7DCCFD495A705 /* [CP] Embed Pods Frameworks */,
+				3BB5B0D9CBA00DCCB60431EB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -135,13 +251,84 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3BB5B0D9CBA00DCCB60431EB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EthereumVisualizer/Pods-EthereumVisualizer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE15D76BE3C7DCCFD495A705 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-EthereumVisualizer/Pods-EthereumVisualizer-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EthereumVisualizer/Pods-EthereumVisualizer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF210B10BB4206582C141D28 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EthereumVisualizer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F98231EC20B3D09500D6DE72 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9729C4520B49699003ACFB4 /* SetOceanView.swift in Sources */,
+				F931918420B3E82B00583A58 /* Token.swift in Sources */,
+				F931918020B3E68600583A58 /* UIViewController.swift in Sources */,
 				F98231F820B3D09600D6DE72 /* ViewController.swift in Sources */,
 				F98231F420B3D09600D6DE72 /* AppDelegate.swift in Sources */,
+				F931917E20B3E67F00583A58 /* GeneralHelper.swift in Sources */,
+				F931917A20B3E22D00583A58 /* String.swift in Sources */,
+				F931917720B3E1EF00583A58 /* ApiClient.swift in Sources */,
+				F931918620B3F70D00583A58 /* Block.swift in Sources */,
+				F931917C20B3E2A800583A58 /* Transaction.swift in Sources */,
+				F931918B20B4765100583A58 /* TokenTransactionTableCell.swift in Sources */,
+				F931918220B3E7D500583A58 /* Constants.swift in Sources */,
+				F931918820B46FAF00583A58 /* DataViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +463,7 @@
 		};
 		F982320520B3D09600D6DE72 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E28CA0A65E79C04871E31E02 /* Pods-EthereumVisualizer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -291,6 +479,7 @@
 		};
 		F982320620B3D09600D6DE72 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD7B641E7504D343744AA0B8 /* Pods-EthereumVisualizer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
