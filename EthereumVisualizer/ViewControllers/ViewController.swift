@@ -10,6 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 import PromiseKit
+import SwiftyJSON
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
@@ -21,9 +22,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var infoNode: SCNNode?
     
+    var lastHash: String = ""
+    var totalCost: Double = 1
+    
+    
     var visibleVC = DataViewController()
     var visiblePlane = SCNPlane()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,28 +132,27 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     private func fetchTokens() {
         print("FETCH TOKENS")
-        when(fulfilled: ApiClient.fetchErcTokens(),
+        when(fulfilled: ApiClient.fetchTopErcTokens(),
                         ApiClient.fetchErcImages())
         .done { tokens, images in
             print("GOT RESPONSE")
             print("TOKENS SIZE: \(tokens.count)")
-
+            
+            var topTokens = tokens
+            
             DispatchQueue.main.async {
-                var tokens = tokens
-                for (index,token) in tokens.enumerated() {
+                for (index,token) in topTokens.enumerated() {
                     print("inside loop")
                     if let imageUrl = images["\(token.symbol)"]["ImageUrl"].string {
-                        tokens[index].imageUrl = "https://cryptocompare.com\(imageUrl)"
+                        topTokens[index].imageUrl = "https://cryptocompare.com\(imageUrl)"
                     }
                     let color = self.generateColor()
                     print("setting color: \(color)")
-                    tokens[index].color = self.generateColor()
+                    topTokens[index].color = self.generateColor()
                 }
-                Token.sharedTokens = tokens
+                Token.sharedTokens = topTokens
                 self.startBlockTimer()
             }
-
-            
             
         }.catch { error in
             self.showAlertFromError(error: error)
@@ -158,105 +161,143 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     private func startBlockTimer() {
         print("startBlockTimer")
-        fetchLatestBlock()
-        Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.fetchLatestBlock), userInfo: nil, repeats: true)
+        fetchErcTransactions()
+        Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.fetchErcTransactions), userInfo: nil, repeats: true)
     }
     
-    @objc private func fetchLatestBlock() {
-        print("FETCH LATEST BLOCK")
-        ApiClient.fetchLatestBlock()
-            .done { block in
-                if(self.blockData.contains(where: {$0.block.hash == block.hash})) {
-                    print("BLOCK ALREADY EXISTS")
-                    return
-                }
-                //print("GOT BLOCK: \(block)")
-                guard let gasUsed = block.gasUsed,
-                    let totalCost = Double(gasUsed),
-                    let transactions = block.transactions else {
-                    return
-                }
+    
+    
+    
+    @objc private func fetchErcTransactions() {
+        print("fetchErcTransactions")
+        ApiClient.fetchBlockcypherData()
+        .then { cypherData -> Promise<[Transaction]> in
+            
+            guard let hash = cypherData["hash"].string,
+                let blockNumber = cypherData["height"].int,
+                let totalCost = cypherData["total"].double else {
+                    throw "Unable to get hash, blockNumber or totalCost from blockcypher json"
+            }
+            
+            print("FOUND DATA FOR BLOCK HASH: \(hash)")
+            print("FOUND DATA FOR BLOCK HASH NUMBER: \(blockNumber)")
+            
+            guard hash != self.lastHash else {
+                throw "Block HASH already found"
+            }
+            
+            print("SAVING LAST BLOCK HASH: \(hash)")
+            
+            self.lastHash = hash
+            if let ethToken = Token.sharedTokens.first(where: {$0.symbol == "ETH"}),
+                let price = Double(ethToken.price.rate) {
                 
-                var tokenDictionary = [Token:Double]()
-                transactions.forEach({ transaction in
-                    if let token = Token.sharedTokens.first(where: {$0.address == transaction.to}),
-                        let gas = transaction.gas,
-                        let gasCost = Double(gas) {
-                        if(tokenDictionary[token] == nil) {
-                            tokenDictionary[token] = gasCost
-                        } else {
-                            tokenDictionary[token]! += gasCost
-                        }
-                    }
-                })
-                
-                var tokenData = [(token: Token, cost: Double, percentage: String)]()
-
-                let scene = self.sceneView.scene
-
-                
-                if(tokenDictionary.keys.count > 0) {
-                    let maxHeight = 0.025
-                    var yCoordinate = 0.0
-                    for (key, value) in tokenDictionary {
-                        let percentageDouble = value / totalCost
-                        let percentage = "\(String(format: "%.2f", percentageDouble * 100))"
-                        tokenData.append((token: key, cost: value, percentage: percentage))
-                        
-                        print("\(key.symbol): \(value) (\(percentage)%)")
-                
-                        let segmentHeight = maxHeight * percentageDouble
-                        
-                        yCoordinate += (segmentHeight / 2)
-                        print("placing ERC box at y coordinate: \(yCoordinate)")
-                        let box = SCNBox(width: 0.025, height: CGFloat(segmentHeight), length: 0.025, chamferRadius: 0)
-                        let material = SCNMaterial()
-                        material.diffuse.contents = key.color
-                        box.materials = [material]
-                        let boxNode = SCNNode(geometry: box)
-                        boxNode.position = SCNVector3(self.index,yCoordinate,-0.1)
-                        scene.rootNode.addChildNode(boxNode)
-                        yCoordinate += (segmentHeight / 2)
-                        
-                    }
-                    print("WHITE BLOCK HEIGHT: \(maxHeight - yCoordinate)")
-
-                    let box = SCNBox(width: 0.025, height: CGFloat(maxHeight - yCoordinate), length: 0.025, chamferRadius: 0)
-                    let material = SCNMaterial()
-                    material.diffuse.contents = UIColor.white
-                    box.materials = [material]
-                    let boxNode = SCNNode(geometry: box)
-                    boxNode.name = block.hash
-                    boxNode.position = SCNVector3(self.index,yCoordinate + ((maxHeight - yCoordinate) / 2),-0.1)
-                    scene.rootNode.addChildNode(boxNode)
-                    
-                } else {
-                    let box = SCNBox(width: 0.025, height: 0.025, length: 0.025, chamferRadius: 0)
-                    let material = SCNMaterial()
-                    material.diffuse.contents = UIColor.white
-                    box.materials = [material]
-                    let boxNode = SCNNode(geometry: box)
-                    boxNode.name = block.hash
-                    boxNode.position = SCNVector3(self.index,0.025/2,-0.1)
-                    scene.rootNode.addChildNode(boxNode)
-                }
-                
-                self.index += 0.05
-                self.sceneView.scene = scene
-
-                
-                print("TOTAL COST: \(totalCost)")
-                
-                self.blockData.append((block: block, tokenData: tokenData))
-                
-                
-
-
-            }.catch { error in
-                print("GOT ERROR DURING FETCH LATEST TRANSACTIONS: \(error)")
-                
+                self.totalCost = (totalCost / pow(10, 18)) * price
+                print("UPDATED TOTAL COST: \(self.totalCost)")
+            } else {
+                print("UNABLE TO GET PRICE ETH")
+            }
+            
+            return ApiClient.fetchTokenTransactions(cypherData: cypherData, topTokens: Token.sharedTokens)
+        }.done { transactions in
+            self.buildArView(transactions: transactions)
+        }.catch { error in
+            print("GOT ERROR: \(error)")
+            self.showAlertFromError(error: error)
         }
     }
+    
+    private func buildArView(transactions: [Transaction]) {
+        
+        print("Building AR View for transactions: \(transactions)")
+        var tokenDictionary = [String:Double]()
+        transactions.forEach({ transaction in
+            if let value = Double(transaction.value),
+                let decimal = Double(transaction.tokenDecimal),
+                let token = Token.sharedTokens.first(where: {$0.symbol == transaction.tokenSymbol}),
+                let price = Double(token.price.rate) {
+                    if(tokenDictionary[transaction.contractAddress] == nil) {
+                        tokenDictionary[transaction.contractAddress] = (value / pow(10,decimal)) * price
+                    } else {
+                        tokenDictionary[transaction.contractAddress]! += (value / pow(10,decimal)) * price
+                    }
+            }
+        })
+
+        var tokenData = [(token: Token, cost: Double, percentage: String)]()
+
+        let scene = self.sceneView.scene
+        let maxHeight = 5.0
+        var yCoordinate = 0.0
+        let zCoordinate = -20.0
+
+        if(tokenDictionary.keys.count > 0) {
+            
+            
+            for (key, value) in tokenDictionary {
+                let percentageDouble = value / totalCost
+                
+                print("value: \(value)")
+                print("totalCost: \(totalCost)")
+                
+                print("percentage double: \(percentageDouble)")
+                //let percentage = "\(String(format: "%.2f", percentageDouble * 100))"
+                
+                
+                
+                //tokenData.append((token: key, cost: value, percentage: percentage))
+                //print("\(key.symbol): \(value) (\(percentage)%)")
+
+                let segmentHeight = maxHeight * percentageDouble
+                
+                print("segment height: \(segmentHeight)")
+                
+                yCoordinate += (segmentHeight / 2)
+                print("placing ERC box at y coordinate: \(yCoordinate)")
+                let box = SCNBox(width: CGFloat(maxHeight), height: CGFloat(segmentHeight), length: CGFloat(maxHeight), chamferRadius: 0)
+                let material = SCNMaterial()
+                if let token = Token.sharedTokens.first(where: {$0.address == key}) {
+                    material.diffuse.contents = token.color
+                } else {
+                    material.diffuse.contents = generateColor()
+                }
+                box.materials = [material]
+                let boxNode = SCNNode(geometry: box)
+                boxNode.position = SCNVector3(self.index,yCoordinate,zCoordinate)
+                scene.rootNode.addChildNode(boxNode)
+                yCoordinate += (segmentHeight / 2)
+
+            }
+            print("WHITE BLOCK HEIGHT: \(maxHeight - yCoordinate)")
+
+            let box = SCNBox(width: CGFloat(maxHeight), height: CGFloat(maxHeight - yCoordinate), length: CGFloat(maxHeight), chamferRadius: 0)
+            let material = SCNMaterial()
+            material.diffuse.contents = UIColor.white
+            box.materials = [material]
+            let boxNode = SCNNode(geometry: box)
+            boxNode.name = lastHash
+            boxNode.position = SCNVector3(self.index,yCoordinate + ((maxHeight - yCoordinate) / 2),zCoordinate)
+            scene.rootNode.addChildNode(boxNode)
+
+        } else {
+            let box = SCNBox(width: CGFloat(maxHeight), height: CGFloat(maxHeight), length: CGFloat(maxHeight), chamferRadius: 0)
+            let material = SCNMaterial()
+            material.diffuse.contents = UIColor.white
+            box.materials = [material]
+            let boxNode = SCNNode(geometry: box)
+            boxNode.name = lastHash
+            boxNode.position = SCNVector3(self.index,maxHeight/2,zCoordinate)
+            scene.rootNode.addChildNode(boxNode)
+        }
+
+        self.index += 6
+        self.sceneView.scene = scene
+
+        //self.blockData.append((block: block, tokenData: tokenData))
+        
+        
+    }
+    
     
     @IBAction func reset(_ sender: Any) {
         self.sceneView.scene.rootNode.childNodes.forEach({$0.removeFromParentNode()})

@@ -12,22 +12,27 @@ import SwiftyJSON
 
 struct Transaction: Codable {
     
-    var blockHash: String? = ""
-    var blockNumber: String? = ""
-    var from: String? = ""
-    var gas: String? = ""
-    var gasPrice: String? = ""
-    var hash: String? = ""
-    var input: String? = ""
-    var nonce: String? = ""
-    var to: String? = ""
-    var transactionIndex: String? = ""
-    var value: String? = ""
-    var v: String? = ""
-    var r: String? = ""
-    var s: String? = ""
+    var blockNumber: String = ""
+    var tokenSymbol: String = ""
+    var value: String = ""
+    var contractAddress: String = ""
+    var input: String = ""
+    var hash: String = ""
+    var to: String = ""
+    var cumulativeGasUsed: String = ""
+    var gasPrice: String = ""
+    var confirmations: String = ""
+    var transactionIndex: String = ""
+    var tokenName: String = ""
+    var nonce: String = ""
+    var blockHash: String = ""
+    var from: String = ""
+    var gasUsed: String = ""
+    var gas: String = ""
+    var timeStamp: String = ""
+    var tokenDecimal: String = ""
     
-    static func createFromJson(json: JSON, key: String) -> Promise<Transaction> {
+    static func createPromiseFromJson(json: JSON, key: String) -> Promise<Transaction> {
         //print("CREATING TRANSACTION FROM JSON: \(json)")
         return Promise { seal in
             do {
@@ -44,8 +49,19 @@ struct Transaction: Codable {
         
     }
     
-    static func createListFromJson(json: JSON, key: String) -> Promise<[Transaction]> {
-        print("CREATING TRANSACTION LIST FROM JSON: \(json)")
+    static func createListFromJson(json: JSON, key: String) -> [Transaction] {
+        //print("CREATING TRANSACTION LIST FROM JSON: \(json)")
+        do {
+            let transactions = try JSONDecoder().decode([Transaction].self, from: json[key].rawData())
+            return transactions
+        } catch {
+            return []
+        }
+        
+    }
+    
+    static func createPromiseListFromJson(json: JSON, key: String) -> Promise<[Transaction]> {
+        //print("CREATING TRANSACTION PROMISE LIST FROM JSON: \(json)")
         return Promise { seal in
             do {
                 let transactions = try JSONDecoder().decode([Transaction].self, from: json[key].rawData())
@@ -56,5 +72,7 @@ struct Transaction: Codable {
             }
         }
     }
+    
+    
     
 }

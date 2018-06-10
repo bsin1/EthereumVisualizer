@@ -25,6 +25,8 @@
 		F98231FB20B3D09600D6DE72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98231F920B3D09600D6DE72 /* Main.storyboard */; };
 		F98231FD20B3D09600D6DE72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F98231FC20B3D09600D6DE72 /* Assets.xcassets */; };
 		F982320020B3D09600D6DE72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98231FE20B3D09600D6DE72 /* LaunchScreen.storyboard */; };
+		F9A6207D20CC9CCB00206ADE /* PriceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A6207C20CC9CCB00206ADE /* PriceData.swift */; };
+		F9A6207F20CCB83E00206ADE /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A6207E20CCB83E00206ADE /* Array.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		F98231FC20B3D09600D6DE72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F98231FF20B3D09600D6DE72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F982320120B3D09600D6DE72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9A6207C20CC9CCB00206ADE /* PriceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceData.swift; sourceTree = "<group>"; };
+		F9A6207E20CCB83E00206ADE /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +117,7 @@
 				F931917B20B3E2A800583A58 /* Transaction.swift */,
 				F931918320B3E82B00583A58 /* Token.swift */,
 				F931918520B3F70D00583A58 /* Block.swift */,
+				F9A6207C20CC9CCB00206ADE /* PriceData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -122,6 +127,7 @@
 			children = (
 				F931917920B3E22D00583A58 /* String.swift */,
 				F931917F20B3E68600583A58 /* UIViewController.swift */,
+				F9A6207E20CCB83E00206ADE /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -192,7 +198,6 @@
 				F98231ED20B3D09500D6DE72 /* Frameworks */,
 				F98231EE20B3D09500D6DE72 /* Resources */,
 				CE15D76BE3C7DCCFD495A705 /* [CP] Embed Pods Frameworks */,
-				3BB5B0D9CBA00DCCB60431EB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -252,21 +257,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3BB5B0D9CBA00DCCB60431EB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EthereumVisualizer/Pods-EthereumVisualizer-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		CE15D76BE3C7DCCFD495A705 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -322,9 +312,11 @@
 				F98231F820B3D09600D6DE72 /* ViewController.swift in Sources */,
 				F98231F420B3D09600D6DE72 /* AppDelegate.swift in Sources */,
 				F931917E20B3E67F00583A58 /* GeneralHelper.swift in Sources */,
+				F9A6207F20CCB83E00206ADE /* Array.swift in Sources */,
 				F931917A20B3E22D00583A58 /* String.swift in Sources */,
 				F931917720B3E1EF00583A58 /* ApiClient.swift in Sources */,
 				F931918620B3F70D00583A58 /* Block.swift in Sources */,
+				F9A6207D20CC9CCB00206ADE /* PriceData.swift in Sources */,
 				F931917C20B3E2A800583A58 /* Transaction.swift in Sources */,
 				F931918B20B4765100583A58 /* TokenTransactionTableCell.swift in Sources */,
 				F931918220B3E7D500583A58 /* Constants.swift in Sources */,

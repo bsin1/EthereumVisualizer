@@ -32,42 +32,18 @@ class ApiClient {
         
     }
     
-    private static func fetchLatestBlockNumber() -> Promise<String> {
-        
-        let url = "https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=WPIM39V2XK35DAQWYGT578ZXYQIDHN46US"
+    static func fetchBlockcypherData() -> Promise<JSON> {
+        let url = "https://api.blockcypher.com/v1/eth/main"
         return performRequest(url: url,
-                              parameters: [:],
-                              method: .get)
-            .then { json in
-                return Promise { seal in
-                    if let blockNumber = json["result"].string {
-                        seal.fulfill(blockNumber)
-                    } else {
-                        seal.reject("unable to get block number")
-                    }
-                }
-        }
-    }
-    
-    static func fetchLatestBlock() -> Promise<Block> {
-        
-        return fetchLatestBlockNumber()
-            .then { blockNumber in
-                fetchLatestBlockByNumber(blockNumber: blockNumber)
+                       parameters: ["token":"fe57007173614cefbcb309d5b4d23a4e"],
+                       method: .get)
+        .then { json -> Promise<JSON> in
+            guard let latestUrl = json["latest_url"].string else {
+                print("REJECTING: \(json)")
+                return Promise { $0.reject("Unable to parse latest_url")}
             }
-    }
-    
-    private static func fetchLatestBlockByNumber(blockNumber: String) -> Promise<Block> {
-        
-        let url = "https://api.etherscan.io/api?module=proxy&action=eth_getBlockByNumber&tag=\(blockNumber)&boolean=true&apikey=WPIM39V2XK35DAQWYGT578ZXYQIDHN46US"
-        
-        return performRequest(url: url,
-                              parameters: [:],
-                              method: .get)
-        .then { json in
-            Block.createFromJson(json: json, key: "result")
+            return performRequest(url: latestUrl, parameters: ["token":"fe57007173614cefbcb309d5b4d23a4e"], method: .get)
         }
-        
     }
     
     static func fetchErcTokens() -> Promise<[Token]> {
@@ -79,8 +55,6 @@ class ApiClient {
         .then { json in
             Token.createListFromJson(json: json)
         }
-        
-        
     }
     
     static func fetchErcImages() -> Promise<JSON> {
@@ -92,9 +66,146 @@ class ApiClient {
         .then { json in
             return Promise { seal in
                 seal.fulfill(json["Data"])
+                
             }
         }
         
+    }
+    
+    static func fetchTokenTransactions(cypherData: JSON, topTokens: [Token]) -> Promise<[Transaction]> {
+        
+        let topTokens = topTokens.filter({$0.symbol != "ETH"})
+        var promises = [Promise<JSON>]()
+        topTokens.forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+        print("total promises size: \(promises.count)")
+        let chunked = promises.chunked(into: 4)
+        var transactions = [Transaction]()
+        let delay = 1.0
+        
+        return when(fulfilled: chunked[0])
+        .then { results -> Guarantee<Void> in
+            print("GOT RESULTS 0: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            when(fulfilled: chunked[1])
+        }.then { results -> Guarantee<Void> in
+            print("GOT RESULTS 1: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            when(fulfilled: chunked[2])
+        }.then { results -> Guarantee<Void> in
+            print("GOT RESULTS 2: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            when(fulfilled: chunked[3])
+        }.then { results -> Guarantee<Void> in
+            print("GOT RESULTS 3: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            when(fulfilled: chunked[4])
+        }.then { results -> Guarantee<Void> in
+            print("GOT RESULTS 4: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            when(fulfilled: chunked[5])
+        }.then { results -> Guarantee<Void> in
+            print("GOT RESULTS 5: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            when(fulfilled: chunked[6])
+        }.then { results -> Guarantee<Void> in
+            print("GOT RESULTS 6: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            when(fulfilled: chunked[7])
+        }.then { results -> Guarantee<Void> in
+            print("GOT RESULTS 7: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            when(fulfilled: chunked[8])
+        }.then { results -> Guarantee<Void> in
+            print("GOT RESULTS 8: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            when(fulfilled: chunked[9])
+        }.then { results -> Guarantee<Void> in
+            print("GOT RESULTS 9: \(results)")
+            let filteredResults = results.filter({$0["status"].string! == "1"})
+            filteredResults.forEach({ json in
+                transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
+            })
+            return after(seconds: delay)
+        }.then {
+            return Promise{$0.fulfill(transactions)}
+        }
+        
+    }
+    
+//    static func returnObjectAfterWait(object:Any, waitTime:TimeInterval) -> Promise<Any>{
+//        return Promise<Any> { (seal: Resolver<Any>) in
+//            after(seconds: waitTime).then { _ in
+//                seal.fulfill(object)
+//            }
+//        }
+//    }
+    
+    static func fetchTopErcTokens() -> Promise<[Token]> {
+        let url = "https://api.ethplorer.io/getTop?criteria=trade&apiKey=freekey"
+        return performRequest(url: url, parameters: [:], method: .get)
+        .then { json in
+            Token.createListFromJson(json: json, key: "tokens")
+        }
+    }
+    
+    static func fetchTokenContractData(symbol: String,
+                                       contractAddress: String,
+                                       blockHeight: Int) -> Promise<JSON> {
+        //print("FETCHING DATA FOR: \(symbol)")
+        let url = "https://api.etherscan.io/api"
+        return performRequest(url: url,
+                              parameters: ["module":"account",
+                                           "action":"tokentx",
+                                           "contractaddress":contractAddress,
+                                           "startBlock":blockHeight,
+                                           "endblock":blockHeight,
+                                           "sort":"asc"],
+                              method: .get)
     }
     
     
@@ -108,11 +219,11 @@ class ApiClient {
                 url,
                 method: method,
                 parameters: parameters,
-                encoding: URLEncoding.httpBody,
                 headers: [:])
             .responseJSON()
             .then { response  in
                 return Promise { seal in
+                    //print("GOT RESPONSE: \(response.json)")
                     seal.fulfill(JSON(response.json))
                 }
         }

@@ -20,14 +20,19 @@ struct Token: Hashable, Codable {
     
     static var sharedTokens = [Token]()
     
-    var symbol: String = ""
     var address: String = ""
+    var name: String = ""
+    var decimals: String = ""
+    var symbol: String = ""
+    var price: PriceData = PriceData()
     var imageUrl: String = ""
     var color: UIColor = UIColor.black
     
     private enum CodingKeys: String, CodingKey {
-        case symbol
         case address
+        case name
+        case symbol
+        case price
     }
     
     init(symbol: String,
@@ -35,16 +40,28 @@ struct Token: Hashable, Codable {
          color: UIColor) {
         self.symbol = symbol
         self.address = address
+        self.color = color
     }
     
-    static func createListFromJson(json: JSON) -> Promise<[Token]> {
-        //print("CREATING TOKEN LIST FROM JSON: \(json)")
+    static func createListFromJson(json: JSON, key: String? = nil) -> Promise<[Token]> {
+        print("CREATING TOKEN LIST FROM JSON: \(json)")
         return Promise { seal in
             do {
-                let tokens = try JSONDecoder().decode([Token].self, from: json.rawData())
+                var tokens = try JSONDecoder().decode([Token].self, from: key != nil ? json[key!].rawData() : json.rawData())
+                
+                if let jsonArray = json.array {
+                    for (index, _) in tokens.enumerated() {
+                        if let decimalsString = jsonArray[index]["decimals"].string {
+                            tokens[index].decimals = decimalsString
+                        } else if let decimalsInt = jsonArray[index]["decimals"].int {
+                            tokens[index].decimals = String(decimalsInt)
+                        }
+                    }
+                }
+                
                 seal.fulfill(tokens)
             } catch {
-                print("error during decode token list: \(error.localizedDescription)")
+                print("error during decode token list: \(error)")
                 seal.reject(error.localizedDescription)
             }
         }
