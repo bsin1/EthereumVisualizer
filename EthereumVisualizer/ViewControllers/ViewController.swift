@@ -64,33 +64,35 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 return
             }
             
-            if(infoNode != nil) {
-                infoNode!.removeFromParentNode()
-                infoNode = nil
-            } else {
-                
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                if let vc = storyboard.instantiateViewController(withIdentifier: "Data") as? DataViewController {
-                    visibleVC = vc
-                    visiblePlane = SCNPlane(width: 0.05, height: 0.05)
-                    visibleVC.hashString = hash
-                    
-                    if let data = blockData.first(where: {$0.block.hash == hash}) {
-                        visibleVC.dataList = data.tokenData
-                    }
-                    
-                    
-                    print("adding view")
-                    visiblePlane.firstMaterial?.diffuse.contents = visibleVC.view
-                    infoNode = SCNNode(geometry: visiblePlane)
-                    infoNode!.position = SCNVector3(node.position.x, 0.05, -0.1)
-                    self.sceneView.scene.rootNode.addChildNode(self.infoNode!)
-
-                } else {
-                    print("unable to create vc")
-                }
-                
-            }
+            print("OPEN OVERLAY HERE")
+            
+//            if(infoNode != nil) {
+//                infoNode!.removeFromParentNode()
+//                infoNode = nil
+//            } else {
+//
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                if let vc = storyboard.instantiateViewController(withIdentifier: "Data") as? DataViewController {
+//                    visibleVC = vc
+//                    visiblePlane = SCNPlane(width: 0.05, height: 0.05)
+//                    visibleVC.hashString = hash
+//
+//                    if let data = blockData.first(where: {$0.block.hash == hash}) {
+//                        visibleVC.dataList = data.tokenData
+//                    }
+//
+//
+//                    print("adding view")
+//                    visiblePlane.firstMaterial?.diffuse.contents = visibleVC.view
+//                    infoNode = SCNNode(geometry: visiblePlane)
+//                    infoNode!.position = SCNVector3(node.position.x, 0.05, -0.1)
+//                    self.sceneView.scene.rootNode.addChildNode(self.infoNode!)
+//
+//                } else {
+//                    print("unable to create vc")
+//                }
+//
+//            }
             
             // this means the node has been touched
         } else {
@@ -241,6 +243,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 print("totalCost: \(totalCost)")
                 
                 print("percentage double: \(percentageDouble)")
+                if(percentageDouble > 1) {
+                    showAlertFromError(error: "HUGE PERCENTAGE DOUBLE FOR ADDRESS: \(key)")
+                }
                 //let percentage = "\(String(format: "%.2f", percentageDouble * 100))"
                 
                 
