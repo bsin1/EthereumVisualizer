@@ -75,14 +75,16 @@ class ApiClient {
     static func fetchTokenTransactions(cypherData: JSON, topTokens: [Token]) -> Promise<[Transaction]> {
         
         let topTokens = topTokens.filter({$0.symbol != "ETH"})
-        var promises = [Promise<JSON>]()
-        topTokens.forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
-        print("total promises size: \(promises.count)")
-        let chunked = promises.chunked(into: 4)
+        let chunked = topTokens.chunked(into: 4)
+        
+        
         var transactions = [Transaction]()
         let delay = 1.0
         
-        return when(fulfilled: chunked[0])
+        var promises = [Promise<JSON>]()
+        chunked[0].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+        
+        return when(fulfilled: promises)
         .then { results -> Guarantee<Void> in
             print("GOT RESULTS 0: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})
@@ -90,8 +92,10 @@ class ApiClient {
                 transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
             })
             return after(seconds: delay)
-        }.then {
-            when(fulfilled: chunked[1])
+        }.then { _ -> Promise<[JSON]> in
+            var promises = [Promise<JSON>]()
+            chunked[1].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+            return when(fulfilled: promises)
         }.then { results -> Guarantee<Void> in
             print("GOT RESULTS 1: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})
@@ -99,8 +103,10 @@ class ApiClient {
                 transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
             })
             return after(seconds: delay)
-        }.then {
-            when(fulfilled: chunked[2])
+        }.then { _ -> Promise<[JSON]> in
+            var promises = [Promise<JSON>]()
+            chunked[2].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+            return when(fulfilled: promises)
         }.then { results -> Guarantee<Void> in
             print("GOT RESULTS 2: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})
@@ -108,8 +114,10 @@ class ApiClient {
                 transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
             })
             return after(seconds: delay)
-        }.then {
-            when(fulfilled: chunked[3])
+        }.then { _ -> Promise<[JSON]> in
+            var promises = [Promise<JSON>]()
+            chunked[3].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+            return when(fulfilled: promises)
         }.then { results -> Guarantee<Void> in
             print("GOT RESULTS 3: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})
@@ -117,8 +125,10 @@ class ApiClient {
                 transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
             })
             return after(seconds: delay)
-        }.then {
-            when(fulfilled: chunked[4])
+        }.then { _ -> Promise<[JSON]> in
+            var promises = [Promise<JSON>]()
+            chunked[4].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+            return when(fulfilled: promises)
         }.then { results -> Guarantee<Void> in
             print("GOT RESULTS 4: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})
@@ -126,8 +136,10 @@ class ApiClient {
                 transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
             })
             return after(seconds: delay)
-        }.then {
-            when(fulfilled: chunked[5])
+        }.then { _ -> Promise<[JSON]> in
+            var promises = [Promise<JSON>]()
+            chunked[5].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+            return when(fulfilled: promises)
         }.then { results -> Guarantee<Void> in
             print("GOT RESULTS 5: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})
@@ -135,8 +147,10 @@ class ApiClient {
                 transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
             })
             return after(seconds: delay)
-        }.then {
-            when(fulfilled: chunked[6])
+        }.then { _ -> Promise<[JSON]> in
+            var promises = [Promise<JSON>]()
+            chunked[6].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+            return when(fulfilled: promises)
         }.then { results -> Guarantee<Void> in
             print("GOT RESULTS 6: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})
@@ -144,8 +158,10 @@ class ApiClient {
                 transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
             })
             return after(seconds: delay)
-        }.then {
-            when(fulfilled: chunked[7])
+        }.then { _ -> Promise<[JSON]> in
+            var promises = [Promise<JSON>]()
+            chunked[7].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+            return when(fulfilled: promises)
         }.then { results -> Guarantee<Void> in
             print("GOT RESULTS 7: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})
@@ -153,8 +169,10 @@ class ApiClient {
                 transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
             })
             return after(seconds: delay)
-        }.then {
-            when(fulfilled: chunked[8])
+        }.then { _ -> Promise<[JSON]> in
+            var promises = [Promise<JSON>]()
+            chunked[8].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+            return when(fulfilled: promises)
         }.then { results -> Guarantee<Void> in
             print("GOT RESULTS 8: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})
@@ -162,8 +180,10 @@ class ApiClient {
                 transactions.append(contentsOf: Transaction.createListFromJson(json: json, key: "result"))
             })
             return after(seconds: delay)
-        }.then {
-            when(fulfilled: chunked[9])
+        }.then { _ -> Promise<[JSON]> in
+            var promises = [Promise<JSON>]()
+            chunked[9].forEach({promises.append(fetchTokenContractData(symbol: $0.symbol, contractAddress: $0.address, blockHeight: cypherData["height"].int!))})
+            return when(fulfilled: promises)
         }.then { results -> Guarantee<Void> in
             print("GOT RESULTS 9: \(results)")
             let filteredResults = results.filter({$0["status"].string! == "1"})

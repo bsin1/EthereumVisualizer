@@ -204,7 +204,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }.done { transactions in
             self.buildArView(transactions: transactions)
         }.catch { error in
+            
             print("GOT ERROR: \(error)")
+            
             self.showAlertFromError(error: error)
         }
     }
